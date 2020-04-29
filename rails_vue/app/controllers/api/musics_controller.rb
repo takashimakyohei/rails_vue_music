@@ -1,5 +1,5 @@
 class Api::MusicsController < ApplicationController
-  protect_from_forgery :except => [:create]
+  protect_from_forgery :except => [:create,:update,:destroy]
 
   def index
     @musics = Music.all
@@ -17,6 +17,24 @@ class Api::MusicsController < ApplicationController
       head :no_content
     else
       render json:@music.errors,status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @music = Music.find(params[:id])
+    if @music.update (music_params)
+      render 'index', formats:'json', handlers: 'jbuilder'
+    else
+      render json: @music.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @music = Music.find(params[:id])
+    if @music.destroy
+      head :no_content
+    else
+      render json: @music.errors, status: :unprocessable_entity
     end
   end
 
