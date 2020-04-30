@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>[Rails+Vue.js]~musicshelf~</h1>
+    <h1>[Rails+Vue.js]~好きな音楽を検索&メモできる~</h1>
     <div class="card-title">
       <div class="music" v-for="music in musics" :key="music.id">
         <div v-on:click="setMusicInfo(music.id)">{{music.title}}</div>
