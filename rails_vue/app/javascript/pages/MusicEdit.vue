@@ -2,7 +2,7 @@
   <div class="container">
     <h1 class="#f3e5f5 purple lighten-5 center">音楽の編集</h1>
     <form class="col">
-      <p>
+      <p class="form-text">title:
         <input
           placeholder="Title"
           type="text"
@@ -12,7 +12,7 @@
         />
       </p>
 
-      <p>
+      <p class="form-text">artist:
         <input
           placeholder="artist"
           type="text"
@@ -22,7 +22,7 @@
         />
       </p>
 
-      <p>
+      <p class="form-text">genre:
         <input
           placeholder="Genre"
           type="text"
@@ -91,6 +91,9 @@ h1 {
 }
 .col {
   text-align: center;
+}
+.form-text{
+  color: white;
 }
 button {
   font-size: 20px;

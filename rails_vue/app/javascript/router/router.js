@@ -8,6 +8,7 @@ import MusicSearchResult from "../pages/MusicSearchResult.vue";
 
 
 Vue.use(VueRouter);
+// Vue.use(VuePaginate);
 
 const routes = [
   { path: "/", name: "MusicHome", component: MusicHome },

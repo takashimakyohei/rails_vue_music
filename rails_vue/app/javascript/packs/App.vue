@@ -18,6 +18,7 @@ export default {
 <style scoped>
 #app{
   background-color: black;
+  font-family: 'DIN Alternate','ヒラギノ角ゴシック','Hiragino Sans',sans-serif;
 
 }
 </style>
