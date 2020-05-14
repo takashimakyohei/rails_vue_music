@@ -1,11 +1,12 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue    from 'vue'
+import App    from './App.vue'
 import Router from '../router/router.js'
-// import VuePaginate from 'vue-paginate';
-// Vue.use(VuePaginate);
+import Store  from '../store/store.js'
+
 
 const app = new Vue({
    el: '#app',
-   router:Router,
+   router: Router,
+   store: Store,
    render: h => h(App)
 })

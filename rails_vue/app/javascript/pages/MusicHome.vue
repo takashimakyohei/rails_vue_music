@@ -1,6 +1,10 @@
 <template>
   <div class="container">
     <h1>[Rails+Vue.js]~好きな音楽を検索&メモできる~</h1>
+    <router-link to="/signup" class="editbtn">サインアップ</router-link>
+        <router-link to="/signin" class="editbtn">サインイン</router-link>
+      <button @click="signOut">サインアウト</button>
+<p>{{name}}さん、ようこそ</p>
     <div class="card-title">
       <div class="music" v-for="music in musics" :key="music.id">
         <div v-on:click="setMusicInfo(music.id)">{{music.title}}</div>
@@ -23,49 +27,44 @@
 <script>
 import Vue from "vue";
 import axios from "axios";
+import firebase from 'firebase'
 
 export default {
   name: "musicHome",
-  data: function() {
-    return {
-      musicInfo: {},
-      musicInfoBool: false,
-      musics: []
-    };
+  data(){
+    return{
+      name: firebase.auth().currentUser.email
+    }
+  },
+  computed: {
+    musics() {
+      return this.$store.state.musics
+    },
+    musicInfo(){
+      return this.$store.state.musicInfo
+    },
+    musicInfoBool(){
+      return this.$store.state.musicInfoBool
+    }
   },
   mounted: function() {
-    this.fetchMusics();
+    this.$store.commit("fetchMusics")
   },
   methods: {
-    fetchMusics() {
-      axios.get("/api/musics").then(
-        res => {
-          for (var i = 0; i < res.data.musics.length; i++) {
-            this.musics.push(res.data.musics[i]);
-          }
-        },
-        error => {
-          console.log(error);
-        }
-      );
+    // 曲の詳細を表示する、setMusicInfoをコミットする→vuexストアのsetMusicInfoが発火する
+    setMusicInfo(id){
+      this.$store.commit('setMusicInfo',{id})
     },
-    // 曲のタイトルをクリックしたら、詳細が表示される
-    setMusicInfo(id) {
-      axios.get(`api/musics/${id}.json`).then(res => {
-        this.musicInfo = res.data;
-        this.musicInfoBool = !this.musicInfoBool;
-      });
+    deleteMusic(id){
+      this.$store.commit('deleteMusic',{id})
+      this.$store.commit('fetchMusics')
     },
-    deleteMusic(id) {
-      if (confirm("Are you sure?")) {
-        axios.delete(`/api/musics/${id}`).then(res => {
-          this.musics = [];
-          this.musicInfo = "";
-          this.musicInfoBool = false;
-          this.fetchMusics();
-        });
-      }
-    }
+    signOut: function () {
+      firebase.auth().signOut().then(() => {
+        this.$router.push('/signin')
+      })
+    },
+
   }
 };
 </script>
@@ -106,10 +105,13 @@ export default {
   border: 4px solid #cd008e;
   margin-top: 30px;
 }
-
+.name{
+  color:white;
+}
 p {
   text-align: center;
   font-size: 23px;
+  color: white;
 }
 .link {
   text-align: center;

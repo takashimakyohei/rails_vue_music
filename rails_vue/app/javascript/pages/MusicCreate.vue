@@ -67,7 +67,7 @@ export default {
 }
 h1{
   text-align: center;
-  color: aliceblue;
+  color: white;
 }
 .validate{
   font-size: 25px;
